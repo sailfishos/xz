@@ -1,0 +1,50 @@
+Name: xz
+Summary: LZMA compression utilities
+Version: 5.0.4
+Release: 1
+Group: Applications/File
+License: LGPLv2+
+URL: http://tukaani.org/%{name}/
+Sources:
+    - http://tukaani.org/%{name}/xz-%{version}.tar.bz2
+Description: |
+    XZ Utils are an attempt to make LZMA compression easy to use on free (as in
+    freedom) operating systems. This is achieved by providing tools and libraries
+    which are similar to use than the equivalents of the most popular existing
+    compression algorithms.
+    
+    LZMA is a general purpose compression algorithm designed by Igor Pavlov as
+    part of 7-Zip. It provides high compression ratio while keeping the
+    decompression speed fast.
+
+Requires:
+    - "%{name}-libs = %{version}-%{release}"
+Configure: none
+Check: yes
+SubPackages:
+    - Name: libs
+      Summary: Libraries for decoding LZMA compression
+      Group: System/Libraries
+      License: LGPLv2+
+      Description: Libraries for decoding files compressed with LZMA or XZ utils.
+
+    - Name: lzma-compat
+      Summary: Older LZMA format compatibility binaries
+      Group: System/Libraries
+      License: GPLv2+ and LGPLv2+
+      Description: |
+          The lzma-compat package contains compatibility links for older
+          commands that deal with the older LZMA format.
+      Provides:
+          - lzma = 5
+      Obsoletes:
+          - lzma < 5
+
+    - Name: devel
+      Summary: Devel libraries & headers for liblzma
+      Group: Development/Libraries
+      License: LGPLv2+
+      Description: Devel libraries and headers for liblzma.
+      Requires:
+          - "%{name}-libs = %{version}-%{release}"
+
