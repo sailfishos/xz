@@ -1,3 +1,6 @@
+* Wed Jan 02 2019 Tomi Leppänen <tomi.leppanen@jolla.com> - 5.0.4-2
+- [xz] Rename xz-docs to xz-doc. Contributes to JB#38578
+
 * Tue Sep 18 2012 Marko Saukko <marko.saukko@jollamobile.com> - 5.0.4
 - Update to version 5.0.4
 - Added .yaml for spectacle
