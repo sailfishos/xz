@@ -8,6 +8,10 @@ URL:        http://tukaani.org/%{name}/
 Source0:    http://tukaani.org/%{name}/xz-%{version}.tar.bz2
 Requires:   %{name}-libs = %{version}-%{release}
 
+BuildRequires: automake
+BuildRequires: libtool
+BuildRequires: gettext-devel
+
 %description
 XZ Utils are an attempt to make LZMA compression easy to use on free (as in
 freedom) operating systems. This is achieved by providing tools and libraries
