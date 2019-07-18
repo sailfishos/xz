@@ -1,9 +1,9 @@
 Name:       xz
 Summary:    LZMA compression utilities
-Version:    5.0.4
-Release:    2
+Version:    5.2.4
+Release:    1
 Group:      Applications/File
-License:    LGPLv2+
+License:    GPLv2+ and Public Domain
 URL:        http://tukaani.org/%{name}/
 Source0:    http://tukaani.org/%{name}/xz-%{version}.tar.bz2
 Requires:   %{name}-libs = %{version}-%{release}
@@ -21,7 +21,7 @@ decompression speed fast.
 
 %package libs
 Summary:    Libraries for decoding LZMA compression
-License:    LGPLv2+
+License:    Public Domain
 Group:      System/Libraries
 Requires:   %{name} = %{version}-%{release}
 Requires(post): /sbin/ldconfig
@@ -33,7 +33,7 @@ Libraries for decoding files compressed with LZMA or XZ utils.
 
 %package lzma-compat
 Summary:    Older LZMA format compatibility binaries
-License:    GPLv2+ and LGPLv2+
+License:    Public Domain
 Group:      System/Libraries
 Requires:   %{name} = %{version}-%{release}
 Provides:   lzma = 5
@@ -66,10 +66,11 @@ Man pages and other documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}/upstream
 
 
 %build
+./autogen.sh
 CFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" \
 CXXFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" \
 %configure --disable-static \
