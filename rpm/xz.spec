@@ -1,11 +1,10 @@
 Name:       xz
 Summary:    LZMA compression utilities
-Version:    5.2.4
+Version:    5.2.5
 Release:    1
-Group:      Applications/File
 License:    GPLv2+ and Public Domain
-URL:        http://tukaani.org/%{name}/
-Source0:    http://tukaani.org/%{name}/xz-%{version}.tar.bz2
+URL:        https://tukaani.org/xz/
+Source0:    %{name}-%{version}.tar.bz2
 Requires:   %{name}-libs = %{version}-%{release}
 
 BuildRequires: automake
@@ -26,8 +25,6 @@ decompression speed fast.
 %package libs
 Summary:    Libraries for decoding LZMA compression
 License:    Public Domain
-Group:      System/Libraries
-Requires:   %{name} = %{version}-%{release}
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
@@ -38,7 +35,6 @@ Libraries for decoding files compressed with LZMA or XZ utils.
 %package lzma-compat
 Summary:    Older LZMA format compatibility binaries
 License:    Public Domain
-Group:      System/Libraries
 Requires:   %{name} = %{version}-%{release}
 Provides:   lzma = 5
 Obsoletes:  lzma < 5
@@ -50,9 +46,7 @@ commands that deal with the older LZMA format.
 
 %package devel
 Summary:    Devel libraries & headers for liblzma
-License:    LGPLv2+
-Group:      Development/Libraries
-Requires:   %{name} = %{version}-%{release}
+License:    Public Domain
 Requires:   %{name}-libs = %{version}-%{release}
 
 %description devel
@@ -61,7 +55,7 @@ Devel libraries and headers for liblzma.
 
 %package doc
 Summary:    Documentation for %{name}
-Group:      Documentation
+BuildArch:  noarch
 Requires:   %{name} = %{version}-%{release}
 Obsoletes:  %{name}-docs
 
@@ -70,46 +64,30 @@ Man pages and other documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}/upstream
-
+%autosetup -n %{name}-%{version}/upstream
 
 %build
-./autogen.sh
-CFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" \
-CXXFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" \
-%configure --disable-static \
---disable-nls
-
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-
-make %{?jobs:-j%jobs}
-
+%reconfigure --disable-static --disable-nls
+%make_build
 
 %install
-rm -rf %{buildroot}
 %make_install
-
-mv %{buildroot}/%{_docdir}/%{name} %{buildroot}/%{_docdir}/%{name}-%{version}
-rm %{buildroot}/%{_docdir}/%{name}-%{version}/COPYING*
-
 
 %check
 LD_LIBRARY_PATH=$PWD/src/liblzma/.libs make check
 
 %post libs -p /sbin/ldconfig
 
-%postun libs
-/sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)
-%license COPYING COPYING.*
+%license COPYING*
 %{_bindir}/*xz*
 
 %files libs
 %defattr(-,root,root,-)
+%license COPYING
 %{_libdir}/lib*.so.*
 
 %files lzma-compat
@@ -125,5 +103,6 @@ LD_LIBRARY_PATH=$PWD/src/liblzma/.libs make check
 %{_libdir}/pkgconfig/liblzma.pc
 
 %files doc
-%doc %{_docdir}/%{name}-%{version}
-%{_mandir}/man*/*
+%defattr(-,root,root,-)
+%{_docdir}/%{name}/
+%{_mandir}/man1/
