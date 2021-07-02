@@ -67,7 +67,11 @@ Man pages and other documentation for %{name}.
 %autosetup -n %{name}-%{version}/upstream
 
 %build
-%reconfigure --disable-static --disable-nls
+CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
+CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
+FFLAGS="${FFLAGS:-%optflags -I%_fmoddir}" ; export FFLAGS ;
+autoreconf -v --install --force || exit 1
+%configure --disable-static --disable-nls
 %make_build
 
 %install
