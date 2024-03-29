@@ -1,8 +1,8 @@
 Name:       xz
 Summary:    LZMA compression utilities
-Version:    5.2.5
+Version:    5.6.2
 Release:    1
-License:    GPLv2+ and Public Domain
+License:    BSD and GPLv2+
 URL:        https://tukaani.org/xz/
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   %{name}-libs = %{version}-%{release}
@@ -57,7 +57,6 @@ Devel libraries and headers for liblzma.
 Summary:    Documentation for %{name}
 BuildArch:  noarch
 Requires:   %{name} = %{version}-%{release}
-Obsoletes:  %{name}-docs
 
 %description doc
 Man pages and other documentation for %{name}.
@@ -81,21 +80,17 @@ LD_LIBRARY_PATH=$PWD/src/liblzma/.libs make check
 %postun libs -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %license COPYING*
 %{_bindir}/*xz*
 
 %files libs
-%defattr(-,root,root,-)
 %license COPYING
 %{_libdir}/lib*.so.*
 
 %files lzma-compat
-%defattr(-,root,root,-)
 %{_bindir}/*lz*
 
 %files devel
-%defattr(-,root,root,-)
 %dir %{_includedir}/lzma
 %{_includedir}/lzma/*.h
 %{_includedir}/lzma.h
@@ -103,6 +98,5 @@ LD_LIBRARY_PATH=$PWD/src/liblzma/.libs make check
 %{_libdir}/pkgconfig/liblzma.pc
 
 %files doc
-%defattr(-,root,root,-)
 %{_docdir}/%{name}/
-%{_mandir}/man1/
+%{_mandir}/man1/*
