@@ -1,9 +1,9 @@
 Name:       xz
 Summary:    LZMA compression utilities
-Version:    5.6.2
+Version:    5.8.1
 Release:    1
 License:    BSD and GPLv2+
-URL:        https://tukaani.org/xz/
+URL:        https://github.com/sailfishos/xz
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   %{name}-libs = %{version}-%{release}
 
