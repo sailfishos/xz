@@ -1,6 +1,6 @@
 Name:       xz
 Summary:    LZMA compression utilities
-Version:    5.8.1
+Version:    5.8.3
 Release:    1
 License:    BSD and GPLv2+
 URL:        https://github.com/sailfishos/xz
